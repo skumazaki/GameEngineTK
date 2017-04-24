@@ -63,6 +63,16 @@ void Game::Initialize(HWND window, int width, int height)
 
 	// デバッグカメラを生成
 	m_debugCamera = std::make_unique<DebugCamera>(m_outputWidth, m_outputHeight);
+
+	// エフェクトファクトリ生成
+	m_factory = std::make_unique<EffectFactory>(m_d3dDevice.Get());
+	// テクスチャのパスを指定
+	m_factory->SetDirectory(L"Resources");
+	// 天球モデルの生成
+	m_modelSkydome = Model::CreateFromCMO(m_d3dDevice.Get(), L"Resources/skydome.cmo", *m_factory);
+	// 地面モデルの生成
+	m_modelGround = Model::CreateFromCMO(m_d3dDevice.Get(), L"Resources/ground1m.cmo", *m_factory);
+
 }
 
 // Executes the basic game loop.
@@ -133,7 +143,7 @@ void Game::Render()
 		XM_PI / 4.f,									// 視野角（上下方向）
 		float(m_outputWidth) / float(m_outputHeight),	// アスペクト比
 		0.1f,											// ニアクリップ	　 この数値から見える
-		50.f											// ファークリップ　この数値までが見える
+		500.f											// ファークリップ　この数値までが見える
 	);
 
 	m_effect->SetView(m_view);
@@ -141,6 +151,12 @@ void Game::Render()
 
 	m_effect->Apply(m_d3dContext.Get());
 	m_d3dContext->IASetInputLayout(m_inputLayout.Get());
+
+	// 天球モデルの描画
+	m_modelSkydome->Draw(m_d3dContext.Get(), *m_states, m_world, m_view, m_proj);
+	// 地面モデルの描画
+	m_modelGround->Draw(m_d3dContext.Get(), *m_states, m_world, m_view, m_proj);
+
 
 	m_batch->Begin();					// ここから～
 
