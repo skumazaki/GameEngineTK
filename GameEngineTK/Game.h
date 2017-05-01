@@ -93,5 +93,18 @@ private:
 	// 天球モデルデータ
 	std::unique_ptr<DirectX::Model> m_modelSkydome;
 	// 地面モデル
-	std::unique_ptr<DirectX::Model> m_modelGround;
+	std::unique_ptr<DirectX::Model> m_modelGround1;
+	std::unique_ptr<DirectX::Model> m_modelGround2;
+	// 球モデル
+	std::unique_ptr<DirectX::Model> m_modelBall;
+	std::unique_ptr<DirectX::Model> m_modelBall1;
+	// ティーポットモデル
+	std::unique_ptr<DirectX::Model> m_modelTeapot;
+	// 球のワールド行列
+	DirectX::SimpleMath::Matrix m_worldBall[10];
+	DirectX::SimpleMath::Matrix m_worldBall1[10];
+	// 地面のワールド行列
+	DirectX::SimpleMath::Matrix m_worldGround2[40000];
+	// ティーポットのワールド行列
+	DirectX::SimpleMath::Matrix m_worldTeapot[20];
 };
