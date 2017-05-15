@@ -13,6 +13,7 @@
 #include <Model.h>
 #include <Keyboard.h>
 #include "DebugCamera.h"
+#include "FollowCamera.h"
 
 
 // A basic game implementation that creates a D3D11 device and
@@ -118,7 +119,9 @@ private:
 	DirectX::SimpleMath::Vector3 head_pos;
 	// 自機のワールド行列
 	DirectX::SimpleMath::Matrix head_world;
-
+	// カメラ
+	std::unique_ptr<FollowCamera> m_Camera;
+	// 自機の回転
 	float head_rot;
 
 	// 球の角度
